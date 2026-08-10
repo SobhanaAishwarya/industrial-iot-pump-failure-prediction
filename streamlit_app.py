@@ -210,8 +210,8 @@ else:
 # Page: Overview
 # --------------------------------------------------------------------------
 def page_overview():
-    st.markdown('<div class="eyebrow">Industrial IoT · Predictive Maintenance</div>', unsafe_allow_html=True)
     st.title("Water Pump Equipment Failure Prediction")
+    st.markdown('<div class="eyebrow">Industrial IoT · Predictive Maintenance</div>', unsafe_allow_html=True)
     st.write(
         "End-to-end pipeline that cleans messy telemetry (missing/disconnected sensor "
         "readings), compares three classifiers under stratified cross-validation, and "
