@@ -13,7 +13,7 @@ world; this project's core design goal is a pipeline that keeps working
 
 ```
 industrial_iot_pump_failure_prediction/
-├── app.py                     # Streamlit dashboard (all 7 pages)
+├── streamlit_app.py           # Streamlit dashboard (all 7 pages)
 ├── config.py                  # Single source of truth: paths, schema, hyperparameters
 ├── generate_sample_data.py    # Synthetic telemetry generator (schema-compatible stand-in)
 ├── requirements.txt
@@ -40,7 +40,7 @@ python generate_sample_data.py
 python -m src.train
 
 # Launch the dashboard:
-streamlit run app.py
+streamlit run streamlit_app.py
 ```
 
 ## Using the real dataset
