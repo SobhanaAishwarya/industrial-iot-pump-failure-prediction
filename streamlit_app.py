@@ -49,7 +49,8 @@ st.set_page_config(page_title="Pump Failure Prediction", layout="wide", page_ico
 st.markdown(
     f"""
     <style>
-    .stApp {{ background: {PALETTE['surface']}; }}
+    .stApp {{ background: {PALETTE['page']}; }}
+    [data-testid="stSidebar"] {{ background: {PALETTE['surface']}; }}
     .block-container {{ padding-top: 2.2rem; padding-bottom: 3rem; max-width: 1280px; }}
     h1, h2, h3 {{ color: {PALETTE['ink_primary']}; font-weight: 700; }}
     p, li {{ color: {PALETTE['ink_secondary']}; }}
@@ -62,17 +63,17 @@ st.markdown(
         letter-spacing: 0.06em; color: {PALETTE['ink_muted']}; margin: 26px 0 10px;
     }}
     [data-testid="stMetric"] {{
-        background: #ffffff; border: 1px solid {PALETTE['gridline']}; border-radius: 12px;
-        padding: 14px 16px; box-shadow: 0 1px 6px rgba(11,11,11,0.05);
+        background: {PALETTE['surface']}; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px;
+        padding: 14px 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.35);
     }}
     [data-testid="stMetricLabel"] {{ color: {PALETTE['ink_muted']}; font-weight: 600; }}
     [data-testid="stMetricValue"] {{ color: {PALETTE['ink_primary']}; }}
     .result-card {{
         border-radius: 14px; padding: 22px 26px; margin-top: 10px; margin-bottom: 10px;
-        border: 1px solid {PALETTE['gridline']};
+        border: 1px solid rgba(255,255,255,0.10);
     }}
-    .result-card.normal {{ background: rgba(12,163,12,0.08); border-color: {PALETTE['status_good']}; }}
-    .result-card.failure {{ background: rgba(208,59,59,0.08); border-color: {PALETTE['status_critical']}; }}
+    .result-card.normal {{ background: rgba(12,163,12,0.14); border-color: {PALETTE['status_good']}; }}
+    .result-card.failure {{ background: rgba(208,59,59,0.14); border-color: {PALETTE['status_critical']}; }}
     .result-card h2 {{ margin: 0 0 4px; }}
     .result-card.normal h2 {{ color: {PALETTE['status_good']}; }}
     .result-card.failure h2 {{ color: {PALETTE['status_critical']}; }}

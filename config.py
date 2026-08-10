@@ -77,16 +77,18 @@ N_SENSORS = 30
 MISSING_VALUE_RATE = 0.04
 
 # --------------------------------------------------------------------------
-# Visual palette (validated categorical / sequential / status colors)
+# Visual palette (validated categorical / sequential / status colors - dark
+# theme: near-black page, dark card surface, white/light-gray text)
 # --------------------------------------------------------------------------
 PALETTE = {
-    "categorical": ["#2a78d6", "#eb6834", "#1baf7a"],  # blue, orange, aqua
-    "sequential_blue": ["#cde2fb", "#6da7ec", "#2a78d6", "#184f95"],
+    "categorical": ["#3987e5", "#d95926", "#199e70"],  # blue, orange, aqua (dark-mode steps)
+    "sequential_blue": ["#184f95", "#2a78d6", "#6da7ec", "#cde2fb"],  # low -> high, recedes toward the dark surface
     "status_good": "#0ca30c",
     "status_critical": "#d03b3b",
-    "ink_primary": "#0b0b0b",
-    "ink_secondary": "#52514e",
+    "ink_primary": "#ffffff",
+    "ink_secondary": "#c3c2b7",
     "ink_muted": "#898781",
-    "gridline": "#e1e0d9",
-    "surface": "#fcfcfb",
+    "gridline": "#2c2c2a",
+    "surface": "#1a1a19",  # card / chart surface
+    "page": "#0d0d0d",  # app background, near-black
 }
