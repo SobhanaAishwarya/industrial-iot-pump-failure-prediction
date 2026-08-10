@@ -1,0 +1,44 @@
+[
+  {
+    "model": "Logistic Regression",
+    "fit_time_sec": 3.94,
+    "accuracy_mean": 0.9176250000000001,
+    "accuracy_std": 0.0017743836958223006,
+    "precision_mean": 0.24801151746255895,
+    "precision_std": 0.010223196609306328,
+    "recall_mean": 0.811070707070707,
+    "recall_std": 0.04585483008693638,
+    "f1_mean": 0.3798251914989476,
+    "f1_std": 0.016708184802675805,
+    "roc_auc_mean": 0.925180103953265,
+    "roc_auc_std": 0.011343743439055982
+  },
+  {
+    "model": "Gradient Boosting",
+    "fit_time_sec": 34.73,
+    "accuracy_mean": 0.9710625,
+    "accuracy_std": 0.0015885331283923747,
+    "precision_mean": 0.5775362437100504,
+    "precision_std": 0.05334234130478588,
+    "recall_mean": 0.2549292929292929,
+    "recall_std": 0.040267871553396936,
+    "f1_mean": 0.3531551818300896,
+    "f1_std": 0.0475027122124899,
+    "roc_auc_mean": 0.9489709300597701,
+    "roc_auc_std": 0.011470481017930334
+  },
+  {
+    "model": "Random Forest",
+    "fit_time_sec": 9.68,
+    "accuracy_mean": 0.966,
+    "accuracy_std": 0.0017161912772182418,
+    "precision_mean": 0.42922015608957376,
+    "precision_std": 0.03997115459814902,
+    "recall_mean": 0.26703030303030306,
+    "recall_std": 0.01559258350437096,
+    "f1_mean": 0.3285448547738275,
+    "f1_std": 0.01886564857465993,
+    "roc_auc_mean": 0.9387940587092383,
+    "roc_auc_std": 0.012961233213990384
+  }
+]
