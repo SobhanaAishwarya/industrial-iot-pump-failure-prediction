@@ -60,6 +60,18 @@ def _expected_columns(pipeline: Pipeline) -> list:
     return columns
 
 
+def _coerce_numeric(series: pd.Series) -> pd.Series:
+    """Coerce a column the schema says is numeric into clean floats.
+
+    Unparseable values (junk strings, blanks) and infinities (sensor
+    overflow/spike glitches) both become NaN so the fitted imputer can
+    replace them, instead of reaching the model and raising on the whole
+    batch over a single bad cell.
+    """
+    coerced = pd.to_numeric(series, errors="coerce")
+    return coerced.replace([np.inf, -np.inf], np.nan)
+
+
 def _expected_numeric_columns(pipeline: Pipeline) -> set:
     """The subset of expected columns the ColumnTransformer's numeric branch
     handles.
@@ -100,7 +112,7 @@ def _coerce_input_row(input_dict: Dict, expected_columns: list, numeric_columns:
 
     for col in expected_columns:
         if col in numeric_columns:
-            df[col] = pd.to_numeric(df[col], errors="coerce")
+            df[col] = _coerce_numeric(df[col])
 
     return df
 
@@ -148,7 +160,7 @@ def predict_batch(pipeline: Pipeline, df: pd.DataFrame) -> pd.DataFrame:
 
     for col in expected_columns:
         if col in numeric_columns:
-            working[col] = pd.to_numeric(working[col], errors="coerce")
+            working[col] = _coerce_numeric(working[col])
 
     try:
         proba = pipeline.predict_proba(working)[:, 1]
