@@ -49,21 +49,6 @@ def load_model(path=None) -> Pipeline:
         raise ModelNotFoundError(f"Failed to load model from '{model_path}': {exc}") from exc
 
 
-def _safe_numeric_coerce(series: pd.Series) -> pd.Series:
-    """Convert an object-dtype series to numeric only if every non-null value
-    parses cleanly; otherwise return it unchanged (it's genuinely categorical).
-
-    Avoids the deprecated `pd.to_numeric(..., errors="ignore")` API while
-    keeping the same intent: don't corrupt a categorical column like
-    `operation_mode` into all-NaN just because it isn't numeric.
-    """
-    converted = pd.to_numeric(series, errors="coerce")
-    became_nan = converted.isna() & series.notna()
-    if became_nan.any():
-        return series
-    return converted
-
-
 def _expected_columns(pipeline: Pipeline) -> list:
     """Recover the exact column list/order the fitted ColumnTransformer expects."""
     preprocessor = pipeline.named_steps["preprocessor"]
@@ -75,14 +60,33 @@ def _expected_columns(pipeline: Pipeline) -> list:
     return columns
 
 
-def _coerce_input_row(input_dict: Dict, expected_columns: list) -> pd.DataFrame:
+def _expected_numeric_columns(pipeline: Pipeline) -> set:
+    """The subset of expected columns the ColumnTransformer's numeric branch
+    handles.
+
+    Coercion has to be schema-driven, not guessed from the data: a sensor
+    that's usually numeric but sends a handful of corrupted readings (e.g.
+    "ERR") must still have those specific cells turned into NaN so they're
+    imputed away, without the rest of that column - or any other column in
+    the same batch - being dragged down with it.
+    """
+    preprocessor = pipeline.named_steps["preprocessor"]
+    numeric_cols = set()
+    for name, _, cols in preprocessor.transformers_:
+        if name == "num":
+            numeric_cols.update(cols)
+    return numeric_cols
+
+
+def _coerce_input_row(input_dict: Dict, expected_columns: list, numeric_columns: set) -> pd.DataFrame:
     """Build a single-row DataFrame matching the model's expected schema.
 
     - Missing keys become NaN (the fitted median/most-frequent imputers
       handle them at transform time - this is the core "never crash on a
       disconnected sensor" behaviour).
-    - Non-numeric junk in a numeric field (e.g. an empty string from a form)
-      is coerced to NaN rather than raising, again deferring to imputation.
+    - Any value in a known-numeric column that isn't parseable (an empty
+      string from a form, "ERR", a disconnected-sensor sentinel) is coerced
+      to NaN rather than raising, again deferring to imputation.
     - Extra keys not in the schema are silently dropped.
     """
     row = {}
@@ -95,8 +99,8 @@ def _coerce_input_row(input_dict: Dict, expected_columns: list) -> pd.DataFrame:
     df = pd.DataFrame([row], columns=expected_columns)
 
     for col in expected_columns:
-        if df[col].dtype == object:
-            df[col] = _safe_numeric_coerce(df[col])
+        if col in numeric_columns:
+            df[col] = pd.to_numeric(df[col], errors="coerce")
 
     return df
 
@@ -110,7 +114,8 @@ def predict_single(pipeline: Pipeline, input_dict: Dict) -> Dict:
         raise PredictionInputError("Input must be a non-empty dictionary of sensor readings.")
 
     expected_columns = _expected_columns(pipeline)
-    row_df = _coerce_input_row(input_dict, expected_columns)
+    numeric_columns = _expected_numeric_columns(pipeline)
+    row_df = _coerce_input_row(input_dict, expected_columns, numeric_columns)
 
     try:
         proba = pipeline.predict_proba(row_df)[0, 1]
@@ -133,6 +138,7 @@ def predict_batch(pipeline: Pipeline, df: pd.DataFrame) -> pd.DataFrame:
     the output with NaN probability rather than crashing the whole batch.
     """
     expected_columns = _expected_columns(pipeline)
+    numeric_columns = _expected_numeric_columns(pipeline)
     working = df.copy()
 
     for col in expected_columns:
@@ -141,8 +147,8 @@ def predict_batch(pipeline: Pipeline, df: pd.DataFrame) -> pd.DataFrame:
     working = working[expected_columns]
 
     for col in expected_columns:
-        if working[col].dtype == object:
-            working[col] = _safe_numeric_coerce(working[col])
+        if col in numeric_columns:
+            working[col] = pd.to_numeric(working[col], errors="coerce")
 
     try:
         proba = pipeline.predict_proba(working)[:, 1]
