@@ -77,18 +77,36 @@ N_SENSORS = 30
 MISSING_VALUE_RATE = 0.04
 
 # --------------------------------------------------------------------------
-# Visual palette (validated categorical / sequential / status colors - dark
-# theme: near-black page, dark card surface, white/light-gray text)
+# Visual palette (validated categorical / sequential / status colors - light
+# lavender theme: soft lavender page, near-white lavender-tinted card
+# surface, dark ink for readability). Re-validated with the dataviz skill's
+# palette checker against this surface - all 6 categorical checks pass
+# (aqua/amber/magenta clear the CVD/normal-vision floors but sit in the
+# sub-3:1 "WARN" contrast band on this light surface; every chart that uses
+# them ships a legend or direct labels as the required relief channel), all
+# text tokens clear WCAG contrast against both page and surface.
 # --------------------------------------------------------------------------
 PALETTE = {
-    "categorical": ["#3987e5", "#d95926", "#199e70"],  # blue, orange, aqua (dark-mode steps)
-    "sequential_blue": ["#184f95", "#2a78d6", "#6da7ec", "#cde2fb"],  # low -> high, recedes toward the dark surface
+    "categorical": [
+        "#2a78d6",  # blue
+        "#eb6834",  # orange
+        "#1baf7a",  # aqua
+        "#eda100",  # amber
+        "#e87ba4",  # magenta
+        "#4a3aa7",  # violet
+    ],
+    "sequential_blue": ["#cde2fb", "#86b6ef", "#2a78d6", "#104281"],  # low -> high, deepens away from the light surface
     "status_good": "#0ca30c",
+    "status_warning": "#fab219",
     "status_critical": "#d03b3b",
-    "ink_primary": "#ffffff",
-    "ink_secondary": "#c3c2b7",
-    "ink_muted": "#898781",
-    "gridline": "#2c2c2a",
-    "surface": "#1a1a19",  # card / chart surface
-    "page": "#0d0d0d",  # app background, near-black
+    "accent": "#4a3aa7",  # violet UI accent (buttons, links, eyebrow) - distinct from the fixed chart series order
+    "accent_hover": "#3a2d8a",
+    "ink_primary": "#221937",
+    "ink_secondary": "#5b4b78",
+    "ink_muted": "#6f5f8c",
+    "gridline": "#e4dcf4",
+    "surface": "#faf7ff",  # card / chart surface - near-white with a lavender whisper
+    "surface_raised": "#efe6fc",  # lifted lavender tint for buttons/hover
+    "border": "rgba(43,26,74,0.12)",
+    "page": "#f1ebfb",  # app background, soft lavender
 }

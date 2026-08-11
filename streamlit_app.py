@@ -49,34 +49,69 @@ st.set_page_config(page_title="Pump Failure Prediction", layout="wide", page_ico
 st.markdown(
     f"""
     <style>
-    .stApp {{ background: {PALETTE['page']}; }}
-    [data-testid="stSidebar"] {{ background: {PALETTE['surface']}; }}
+    .stApp {{
+        background:
+            radial-gradient(1100px 560px at 8% -12%, rgba(124,92,196,0.16), transparent 60%),
+            radial-gradient(900px 480px at 96% -6%, rgba(216,140,190,0.12), transparent 55%),
+            {PALETTE['page']};
+    }}
+    [data-testid="stSidebar"] {{
+        background: {PALETTE['surface']}; border-right: 1px solid {PALETTE['border']};
+    }}
+    [data-testid="stSidebar"] * {{ color: {PALETTE['ink_secondary']}; }}
+    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {{
+        color: {PALETTE['ink_primary']};
+    }}
     .block-container {{ padding-top: 2.2rem; padding-bottom: 3rem; max-width: 1280px; }}
     h1, h2, h3 {{ color: {PALETTE['ink_primary']}; font-weight: 700; }}
-    p, li {{ color: {PALETTE['ink_secondary']}; }}
+    p, li, span, label {{ color: {PALETTE['ink_secondary']}; }}
     .eyebrow {{
         font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-        color: {PALETTE['categorical'][0]}; margin-bottom: 2px;
+        color: {PALETTE['accent']}; margin-bottom: 2px;
     }}
     .section-title {{
         font-size: 12.5px; font-weight: 700; text-transform: uppercase;
         letter-spacing: 0.06em; color: {PALETTE['ink_muted']}; margin: 26px 0 10px;
     }}
     [data-testid="stMetric"] {{
-        background: {PALETTE['surface']}; border: 1px solid rgba(255,255,255,0.10); border-radius: 12px;
-        padding: 14px 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.35);
+        background: {PALETTE['surface']}; border: 1px solid {PALETTE['border']}; border-radius: 12px;
+        padding: 14px 16px; box-shadow: 0 1px 10px rgba(76,58,140,0.10);
+        transition: border-color 0.15s ease, transform 0.15s ease;
+    }}
+    [data-testid="stMetric"]:hover {{
+        border-color: rgba(74,58,167,0.45); transform: translateY(-1px);
     }}
     [data-testid="stMetricLabel"] {{ color: {PALETTE['ink_muted']}; font-weight: 600; }}
     [data-testid="stMetricValue"] {{ color: {PALETTE['ink_primary']}; }}
+    [data-testid="stDataFrame"] {{
+        border: 1px solid {PALETTE['border']}; border-radius: 10px; overflow: hidden;
+    }}
+    .stTabs [data-baseweb="tab-list"] {{ gap: 4px; }}
+    .stTabs [data-baseweb="tab"] {{ color: {PALETTE['ink_muted']}; }}
+    .stTabs [aria-selected="true"] {{ color: {PALETTE['ink_primary']}; }}
+    div.stButton > button, div.stDownloadButton > button {{
+        background: {PALETTE['surface_raised']}; color: {PALETTE['ink_primary']};
+        border: 1px solid {PALETTE['border']}; border-radius: 8px; font-weight: 600;
+        transition: border-color 0.15s ease;
+    }}
+    div.stButton > button *, div.stDownloadButton > button * {{ color: inherit !important; }}
+    div.stButton > button:hover, div.stDownloadButton > button:hover {{
+        border-color: {PALETTE['accent']}; color: {PALETTE['accent']};
+    }}
+    div.stButton > button[kind="primary"] {{
+        background: {PALETTE['accent']}; color: #ffffff; border: none;
+    }}
+    div.stButton > button[kind="primary"]:hover {{ background: {PALETTE['accent_hover']}; color: #ffffff; }}
     .result-card {{
         border-radius: 14px; padding: 22px 26px; margin-top: 10px; margin-bottom: 10px;
-        border: 1px solid rgba(255,255,255,0.10);
+        border: 1px solid {PALETTE['border']}; box-shadow: 0 4px 18px rgba(76,58,140,0.12);
     }}
     .result-card.normal {{ background: rgba(12,163,12,0.14); border-color: {PALETTE['status_good']}; }}
     .result-card.failure {{ background: rgba(208,59,59,0.14); border-color: {PALETTE['status_critical']}; }}
     .result-card h2 {{ margin: 0 0 4px; }}
     .result-card.normal h2 {{ color: {PALETTE['status_good']}; }}
     .result-card.failure h2 {{ color: {PALETTE['status_critical']}; }}
+    .result-card p {{ color: {PALETTE['ink_secondary']}; }}
     </style>
     """,
     unsafe_allow_html=True,
