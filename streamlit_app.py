@@ -44,7 +44,11 @@ METRIC_LABELS = {
     "roc_auc": "ROC-AUC",
 }
 
-st.set_page_config(page_title="Pump Failure Prediction", layout="wide", page_icon="🛠")
+st.set_page_config(
+    page_title="Industrial IoT Sensor Cleaning & Equipment Classifier Pipeline",
+    layout="wide",
+    page_icon="🛠",
+)
 
 st.markdown(
     f"""
@@ -216,7 +220,7 @@ model_ready = config.BEST_MODEL_PATH.exists()
 # --------------------------------------------------------------------------
 # Sidebar
 # --------------------------------------------------------------------------
-st.sidebar.markdown("### Pump Failure Prediction")
+st.sidebar.markdown("### Industrial IoT Sensor Cleaning & Equipment Classifier Pipeline")
 st.sidebar.caption("Industrial IoT sensor cleaning & equipment classifier")
 page = st.sidebar.radio(
     "Navigate",
@@ -246,7 +250,7 @@ else:
 # Page: Overview
 # --------------------------------------------------------------------------
 def page_overview():
-    st.title("Water Pump Equipment Failure Prediction")
+    st.title("Industrial IoT Sensor Cleaning & Equipment Classifier Pipeline")
     st.markdown('<div class="eyebrow">Industrial IoT · Predictive Maintenance</div>', unsafe_allow_html=True)
     st.write(
         "End-to-end pipeline that cleans messy telemetry (missing/disconnected sensor "
