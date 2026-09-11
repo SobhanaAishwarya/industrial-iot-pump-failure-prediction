@@ -9,6 +9,20 @@ Sensors disconnect and send corrupted or missing readings in the real
 world; this project's core design goal is a pipeline that keeps working
 (imputing, scaling, predicting) instead of crashing when that happens.
 
+## Screenshots
+
+| Overview | Dataset Explorer |
+| --- | --- |
+| ![Overview](screenshots/01-overview.png) | ![Dataset Explorer](screenshots/02-dataset-explorer.png) |
+
+| Model Comparison | Held-out Evaluation |
+| --- | --- |
+| ![Model Comparison](screenshots/03-model-comparison.png) | ![Evaluation](screenshots/04-evaluation.png) |
+
+| Live Prediction |
+| --- |
+| ![Live Prediction](screenshots/05-live-prediction.png) |
+
 ## Project structure
 
 ```
