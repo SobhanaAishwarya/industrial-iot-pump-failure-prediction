@@ -92,3 +92,7 @@ columns dynamically, and `src/data_loader.py` maps `machine_status`
 - **Resilience**: `src/predict.py` coerces missing fields to `NaN` rather
   than raising, so the fitted imputers absorb disconnected-sensor scenarios
   at inference time exactly as they did during training.
+
+---
+
+© 2026 Kantapalli Sobhana Aishwarya. All rights reserved. Shared for portfolio viewing; please ask before reusing.
