@@ -5,6 +5,8 @@ industrial sensor telemetry, built around the **Water Pump Industrial
 Telemetry Dataset** schema (timestamp, `sensor_00..sensor_NN`,
 `machine_status`).
 
+> Built during my AI & ML internship with IBM Innovation Centre for Education × Q2D (PEARL program, May - July 2026).
+
 Sensors disconnect and send corrupted or missing readings in the real
 world; this project's core design goal is a pipeline that keeps working
 (imputing, scaling, predicting) instead of crashing when that happens.
